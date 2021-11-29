@@ -35,7 +35,7 @@ while True:
 			os.system(rsync)
 		except:
 			print("rsync command failed:"+rsync)
-		time.sleep(10)
+		time.sleep(300)
 		current_time = time.strftime("%H:%M:%S", time.localtime())
 
 		print('\n'+'Directory is current as of: '+current_time+'\n')
