@@ -6,7 +6,7 @@ A collection of crude scripts and workarounds for CryoEM
 The safest way to run this is to make a new directory and symlink all the movies and corresponding mdoc files. <pre>python rename_image_shift.py</pre>
 
 
-`rsync.py` will rsync with -aP options on a loop and can be stopped remotely by adding a file to the destination directory called "stop".The script
+`rsync.py` will rsync with -aP options on a loop and can be stopped remotely by adding a file to the destination directory called "stop". The script
 assumes you you have ssh keys set up for access without a password.
 <pre>python rsync.py --u username --i 123.123.123.123 --p /full/path/to/data/directory/ --d /full/path/to/destination/directory/ </pre>
 
