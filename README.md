@@ -12,3 +12,8 @@ assumes you you have ssh keys set up for access without a password.
 
 To kill the script from the remote machine
 <pre>touch /full/path/to/destination/directory/stop </pre>
+
+
+`replacepaths.py` compares two star files  A and B and replaces the paths for rlnImageName and rlnMicrographName in A from B based on matching X and Y coordinates. Requires the starfile module from alisterburt
+<pre>python replacepaths.py --i particles.star --p particles_with_correct_paths.star --o output.star </pre>
+
