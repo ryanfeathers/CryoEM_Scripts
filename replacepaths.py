@@ -6,7 +6,6 @@ Date: 12/09/2021
 """
 import argparse
 import starfile
-import os.path
 
 
 parser = argparse.ArgumentParser()
