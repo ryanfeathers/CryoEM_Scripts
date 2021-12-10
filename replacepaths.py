@@ -39,5 +39,5 @@ for index, row in df.iterrows():
 	df.at[index, 'rlnMicrographName'] = rmn.strip('(),\'')
 
 od['particles'] = df
-starfile.write(od, args.o)
+starfile.write(od, args.o,force_loop=True)
 	
