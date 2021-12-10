@@ -16,8 +16,9 @@ parser.add_argument('--o', type=str, required=True, help='output file name')
 args = parser.parse_args()
 
 
-optics = (starfile.read(args.i))['optics']
-df = (starfile.read(args.i))['particles']
+od = (starfile.read(args.i))
+
+df = od['particles']
 
 pdf = (starfile.read(args.p))['particles']
 
@@ -37,6 +38,6 @@ for index, row in df.iterrows():
 	df.at[index, 'rlnImageName'] = rip.strip('(),\'')
 	df.at[index, 'rlnMicrographName'] = rmn.strip('(),\'')
 
-sf = [optics, df]
-starfile.write(sf, args.o)
+od['particles'] = df
+starfile.write(od, args.o)
 	
