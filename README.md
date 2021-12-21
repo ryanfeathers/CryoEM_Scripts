@@ -17,3 +17,5 @@ To kill the script from the remote machine
 `replacepaths.py` compares two star files  A and B and replaces the paths for rlnImageName and rlnMicrographName in A from B based on matching X and Y coordinates. Requires the starfile module from alisterburt. This is useful for removing the unnecessary numbers added to the paths by cryosparc v3.3 when working from relion to cryosparc then back to relion.
 <pre>python replacepaths.py --i particles.star --p particles_with_correct_paths.star --o output.star </pre>
 
+`replacepaths2.py` can remove UIDs with with search and replace
+<pre>python replacepaths2.py --i particles.star --o output.star --nouid </pre>
