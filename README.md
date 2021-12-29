@@ -19,3 +19,6 @@ To kill the script from the remote machine
 
 `repairpaths.py` can remove UIDs with with search and replace or the same functionality as `replacepaths.py`
 <pre>python repairpaths.py --i particles.star --o output.star --nouid </pre>
+
+`splitimageshift.py` writes out a star file for 9 imageshift groups by searching the rlnMicrographName column for a list of strings. Edit the list in the script to accommodate different image shift patterns
+<pre>python splitimageshift.py --i particles.star </pre>
