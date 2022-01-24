@@ -20,7 +20,11 @@ args = parser.parse_args()
 
 
 od = (starfile.read(args.i))
-df = od['particles']
+try:
+	df = od['particles']
+except KeyError as err:
+	print("\nError reading star file "+str(args.i)+" might be missing data_optics or data_particles labels")
+	raise SystemExit()
 d = {}
 
 
