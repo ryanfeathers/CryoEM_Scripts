@@ -23,7 +23,7 @@ od = (starfile.read(args.i))
 try:
 	df = od['particles']
 except KeyError as err:
-	print("\nError reading star file "+str(args.i)+" might be missing data_optics or data_particles labels")
+	print("\nError reading star file, "+str(args.i)+" might be missing data_optics or data_particles labels")
 	raise SystemExit()
 d = {}
 
