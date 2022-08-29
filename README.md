@@ -22,3 +22,5 @@ To kill the script from the remote machine
 
 `splitimageshift.py` writes out a star file for 9 imageshift groups by searching the rlnMicrographName column for a list of strings. Edit the list in the script to accommodate different image shift patterns
 <pre>python splitimageshift.py --i particles.star </pre>
+
+`contactmap_it.py` will calculate the number of contacts <12Å between two protein chains for each pdb file in the directory where it's run and write out a text file with the scores. This is a work in progress.
