@@ -24,3 +24,5 @@ To kill the script from the remote machine
 <pre>python splitimageshift.py --i particles.star </pre>
 
 `contactmap_it.py` will calculate the number of contacts <12Å between two protein chains for each pdb file in the directory where it's run and write out a text file with the scores. This is a work in progress.
+
+`searchandreplace.py` will prompt the user for a file name, and text strings for search and replace. Leave the replacement text blank and you will be asked if you want to delete the string or line containing the string. The result is written out as a new file with _mod appended to the name.
