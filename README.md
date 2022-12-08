@@ -26,3 +26,7 @@ To kill the script from the remote machine
 `contactmap_it.py` will calculate the number of contacts <12Å between two protein chains for each pdb file in the directory where it's run and write out a text file with the scores. This is a work in progress.
 
 `searchandreplace.py` will prompt the user for a file name and text strings for search and replace. Leave the replacement text blank and you will be asked if you want to delete the string or line containing the string. The result is written out as a new file with _mod appended to the name.
+
+`star_editor.py` Can remove UID's or search and replace in text file in a GUI with a live display of the open file. Requires python3 with tkinter.
+<pre>python star_editor.py</pre>
+
