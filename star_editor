@@ -1,0 +1,101 @@
+#!/usr/bin/env python3
+"""
+A gui for editing .star files - work in progress
+Author: Ryan Feathers jrf296
+Date: 12/08/2022
+
+"""
+
+
+import tkinter as tk
+from tkinter import filedialog
+import re
+
+# Create the main window
+root = tk.Tk()
+root.title("star file editor")
+
+# Create a function to open the file browser and select a .star file
+def open_file():
+    # Use the filedialog module to open the file browser
+    filepath = filedialog.askopenfilename(title="Select a .star file", filetypes=(("star files","*.star"),("all files","*.*")))
+    
+    # If a file was selected, open it and load its contents into memory
+    if filepath:
+        with open(filepath, "r") as f:
+            # Read the contents of the .star file and store it in a variable
+            global star_file_contents
+            star_file_contents = f.read()
+            
+            # Perform operations on the .star file here, if desired
+            
+            # Clear the text box
+            display_textbox.delete("1.0", tk.END)
+            
+            # Insert the selected lines into the text box
+            display_textbox.insert("1.0", star_file_contents)
+
+# Create a function to save the .star file
+def save_file():
+    # Use the filedialog module to open the save file dialog
+    filepath = filedialog.asksaveasfilename(title="Save .star file", defaultextension=".star", filetypes=(("star files","*.star"),("all files","*.*")))
+    
+    # If a filepath was provided, save the .star file to that location
+    if filepath:
+        with open(filepath, "w") as f:
+            # Write the contents of the .star file to the specified filepath
+            f.write(star_file_contents)
+
+# Create a function to remove the UID from the .star file
+def remove_uid():
+  # Define pattern
+    pattern = re.compile(r'\d{16}')
+    global star_file_contents
+    result = pattern.sub('',star_file_contents)
+    star_file_contents = result
+    # Update the text box with the updated .star file contents
+    display_textbox.delete("1.0", tk.END)
+    display_textbox.insert("1.0", star_file_contents)
+
+def search_and_replace():
+    # Get the search string and replace string from the text boxes
+    search_string = search_entry.get()
+    replace_string = replace_entry.get()
+    global star_file_contents
+
+    # Replace the search string with the replace string in the .star file contents
+    star_file_contents = star_file_contents.replace(search_string, replace_string)
+    
+    # Update the text box with the updated .star file contents
+    display_textbox.delete("1.0", tk.END)
+    display_textbox.insert("1.0", star_file_contents)
+
+
+# Create a text entry field where the user can enter the output file name
+search_entry = tk.Entry(root)
+search_entry.pack()
+
+replace_entry = tk.Entry(root)
+replace_entry.pack()
+
+# Create a button to open the file browser and load the .star file
+open_file_button = tk.Button(root, text="Open .star file", command=open_file)
+open_file_button.pack()
+
+# Create a button to remove the UID from the .star file
+remove_uid_button = tk.Button(root, text="Remove UID", command=remove_uid)
+remove_uid_button.pack()
+
+# Create a button to search and replace
+search_and_replace_button = tk.Button(root, text="Search and Replace", command=search_and_replace)
+search_and_replace_button.pack()
+
+# Create a button to save the .star file
+save_file_button = tk.Button(root, text="Save .star file", command=save_file)
+save_file_button.pack()
+
+display_textbox = tk.Text(root)
+display_textbox.pack(side="top", fill="both", expand=True, padx=0, pady=0)
+
+# Start the main event loop
+root.mainloop()
