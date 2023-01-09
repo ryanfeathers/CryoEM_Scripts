@@ -30,3 +30,6 @@ To kill the script from the remote machine
 `star_editor.py` Can remove UID's or search and replace in text file in a GUI with a live display of the open file. Requires python3 with tkinter.
 <pre>python star_editor.py</pre>
 
+`plotfsc.py` Generates FSC plots in EPS format from the RELION XML files. 
+<pre>python plotfsc.py --i input.xml --o output.eps </pre>
+
