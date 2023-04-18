@@ -27,7 +27,7 @@ To kill the script from the remote machine
 
 `searchandreplace.py` will prompt the user for a file name and text strings for search and replace. Leave the replacement text blank and you will be asked if you want to delete the string or line containing the string. The result is written out as a new file with _mod appended to the name.
 
-`star_editor.py` Can remove UID's or search and replace in text file in a GUI with a live display of the open file. Requires python3 with tkinter.
+`star_editor.py` Can remove UID's,search and replace in text file, or change all values for a rlnName column in a GUI with a live display of the open file. Requires python3 with tkinter.
 <pre>python star_editor.py</pre>
 
 `plotfsc.py` Generates FSC plots in EPS format from the RELION XML files. 
