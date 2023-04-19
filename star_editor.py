@@ -3,7 +3,7 @@
 """
 A gui for editing .star files - work in progress
 Author: Ryan Feathers jrf296
-Date: 12/08/2022
+Date: 04/19/2023
 """
 
 import tkinter as tk
@@ -49,7 +49,7 @@ def save_file():
 # Create a function to remove the UID from the .star file
 def remove_uid():
     # Define pattern
-    pattern = re.compile(r'\d{16}')
+    pattern = re.compile(r'\d{21}'+"_")
     global star_file_contents
     result = pattern.sub('',star_file_contents)
     star_file_contents = result
@@ -63,8 +63,8 @@ def search_and_replace():
     replace_string = replace_entry.get()
     selected_table = selected_table_var.get()
 
-    if not search_string or not replace_string:
-        print("Please provide both the search string and the replace string.", file=sys.stderr)
+    if not search_string:
+        print("Please provide the search string.", file=sys.stderr)
         return
 
     global star_file_contents
@@ -169,7 +169,9 @@ search_entry.grid(row=0, column=1, padx=(0, 10))
 replace_label = tk.Label(search_replace_frame, text="Replace:")
 replace_label.grid(row=1, column=0, padx=(0, 10))
 replace_entry = tk.Entry(search_replace_frame)
+replace_entry.insert(0, "")  # Set the default value to an empty string
 replace_entry.grid(row=1, column=1, padx=(0, 10))
+
 
 # Create a frame for column name and new value
 update_frame = tk.Frame(root)
