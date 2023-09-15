@@ -123,24 +123,37 @@ def update_column_value():
         data_section = ""
         # Initialize a flag to check if the table has multiple lines
         multiple_lines = False
-        # Iterate over lines to find the column index
-        for i, line in enumerate(lines):
-            if line.startswith("data_"):
-                data_section = line.split("_")[-1].strip()
-            elif line.startswith("loop_"):
-                loop_idx = i
-            elif line.startswith("_" + column_name + " #") and (selected_table == data_section):
-                column_index = int(line.split("#")[-1].strip()) - 1
-            elif loop_idx != -1 and column_index != -1 and line.strip() and not line.startswith("_"):
-                tokens = line.split()
-                tokens[column_index] = new_value
-                lines[i] = " ".join(tokens)
-                multiple_lines = True
-            elif multiple_lines and loop_idx != -1 and column_index != -1 and not line.strip():
-                break
-        bind_modified_event()
-        # Update the star file contents
-        star_file_contents = "\n".join(lines)
+        # Iterate over lines
+        if not function_var.get():
+            for i, line in enumerate(lines):
+                if line.startswith("data_"):
+                    data_section = line.split("_")[-1].strip()
+                elif line.startswith("loop_"):
+                    loop_idx = i
+                elif line.startswith("_" + column_name + " #") and (selected_table == data_section):
+                    column_index = int(line.split("#")[-1].strip()) - 1
+                elif loop_idx != -1 and column_index != -1 and line.strip() and not line.startswith("_"):
+                    tokens = line.split()
+                    tokens[column_index] = new_value
+                    lines[i] = " ".join(tokens)
+                    multiple_lines = True
+                elif multiple_lines and loop_idx != -1 and column_index != -1 and not line.strip():
+                    break
+            bind_modified_event()
+            # Update the star file contents
+            star_file_contents = "\n".join(lines)
+        elif function_var.get():
+            star = star_to_dataframes(lines)
+            if selected_table == "optics":
+                sel_star = star[0]
+                modified_df = user_func(sel_star, column_name, new_value)
+                star_file_contents = df_to_star(modified_df, star[1])
+            else:
+                sel_star = star[1]
+                modified_df = user_func(sel_star, column_name, new_value)
+                star_file_contents = df_to_star(star[0], modified_df)
+            bind_modified_event()
+            
         # Update the text box with the updated .star file contents
         display_textbox.delete("1.0", tk.END)
         display_textbox.insert("1.0", star_file_contents)
@@ -176,6 +189,32 @@ def modify_textbox_content(callback):
     callback()
     display_textbox.config(state=original_state)
     in_manual_edit_mode = edit_mode_var.get()  # Restore the manual edit mode status
+
+def user_func(df, column, func):
+    # Add an underscore to the column name to match the dataframe's format
+    column = "_" + column
+    # Ensure the column exists in the dataframe
+    if column not in df.columns:
+        print(f"Column '{column}' not found in dataframe columns.")
+        return df
+    # Attempt to convert all values in the column to float
+    try:
+        df[column] = df[column].astype(float)
+    except ValueError:
+        print(f"Column '{column}' contains values that cannot be converted to numeric.")
+        return df
+    # Check if the provided function is valid
+    sample_value = 1
+    try:
+        eval(func.replace("x", str(sample_value)))
+    except:
+        print("The provided function is invalid.")
+        return df
+    # Apply the function to the dataframe column
+    df[column] = df[column].apply(lambda x: eval(func.replace("x", str(x))))
+    return df
+
+
 
 def star_to_dataframes(lines):
     # Placeholder for data blocks
@@ -330,6 +369,9 @@ new_value_label = tk.Label(search_replace_frame, text="New Value:", anchor="e")
 new_value_label.grid(row=1, column=2, padx=5, ipadx=2, ipady=2, sticky="e")
 new_value_entry = tk.Entry(search_replace_frame)
 new_value_entry.grid(row=1, column=3, padx=5, ipadx=2, ipady=2)
+function_var = tk.BooleanVar(root, value=False) # Default: unchecked
+function_checkbox = tk.Checkbutton(search_replace_frame, text="Function", variable=function_var)
+function_checkbox.grid(row=1, column=4, padx=5)
 # Create buttons for search and replace and update column value
 search_and_replace_button = tk.Button(search_replace_frame, text="Search and Replace", command=search_and_replace)
 search_and_replace_button.grid(row=2, column=0, columnspan=2, pady=10, padx=5, sticky="ew")
