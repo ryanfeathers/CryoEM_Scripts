@@ -1,9 +1,9 @@
 
 #!/usr/bin/env python3
 """
-A gui for editing .star files - experimental
+A gui for editing .star files with experimental features
 Author: Ryan Feathers jrf296
-Date: 9/5/2023
+Date: 9/22/2023
 """
 
 import tkinter as tk
@@ -124,6 +124,25 @@ def update_column_value():
         # Initialize a flag to check if the table has multiple lines
         multiple_lines = False
         # Iterate over lines
+        star = star_to_dataframes(lines)
+        proper_column_name = "_" + column_name
+        # if not column_name in star[0].columns or star[1].columns:
+        #     print("Column not present adding column to selected table")
+        #     if selected_table == "optics":
+        #         star[0]["_"+column_name+' #'+str(range(len(star[0])))] = pd.Series([0 for x in range(len(star[0].index))])
+        #     else:
+        #         star[1]["_"+column_name+' #'+str(range(len(star[1])))] = pd.Series([0 for x in range(len(star[1].index))])
+        #     lines = df_to_star(star[0],star[1])
+        if proper_column_name not in star[0].columns and proper_column_name not in star[1].columns:
+            print("Column not present; adding column to selected table")
+            if selected_table == "optics":
+                star[0][proper_column_name] = pd.Series([0 for x in range(len(star[0].index))])
+            else:
+                star[1][proper_column_name] = pd.Series([0 for x in range(len(star[1].index))])
+            star_file_contents = df_to_star(star[0],star[1])
+            lines = star_file_contents.split('\n')
+        
+ 
         if not function_var.get():
             for i, line in enumerate(lines):
                 if line.startswith("data_"):
