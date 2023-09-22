@@ -25,4 +25,4 @@ To kill the script from the remote machine
 `star_editor.py` Can remove UID's,search and replace in text file, or change all values for a rlnName column in a GUI with a live display of the open file. Requires python3 with tkinter.
 <pre>python star_editor.py</pre>
 
-`star_editor_experimental.py` has added functionality for manually editing, modifying column values, and selectin subsets. Please report any bugs or unexpected results. When the function box is checked, provide a function as the new column value where the current column value is represented by x. For example (x+1)/2
+`star_editor_experimental.py` has added functionality for manually editing, modifying column values, and selecting subsets. Please report any bugs or unexpected results. When the function box is checked, provide a function as the new column value where the current column value is represented by x. For example (x+1)/2
