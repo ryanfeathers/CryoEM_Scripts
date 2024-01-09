@@ -26,3 +26,6 @@ To kill the script from the remote machine
 <pre>python star_editor.py</pre>
 
 `star_editor_experimental.py` has added functionality for manually editing, modifying column values, and selecting subsets. Please report any bugs or unexpected results. When the function box is checked, provide a function as the new column value where the current column value is represented by x. For example (x+1)/2
+
+`rln31downgrade.py` Converts RELION 3.1+ star files for compatibility with Warp/M. See https://www.jiscmail.ac.uk/cgi-bin/webadmin?A2=ind1910&L=CCPEM&P=R321009 for more info.
+<pre>python rln31downgrade.py --i particles.star </pre>
