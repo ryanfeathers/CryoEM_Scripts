@@ -3,7 +3,7 @@
 """
 A gui for editing .star files - experimental, more features less stable
 Author: Ryan Feathers jrf296
-Date: 10/12/2023
+Date: 09/24/2024
 """
 
 import tkinter as tk
@@ -324,18 +324,25 @@ def df_to_star(optics_df, particles_df):
     return star_content.strip()  # strip() to remove potential trailing newlines
 
 def split_by_column():
-    # Get the column name from the entry widget
-    column_name = '_'+split_column_name_entry.get()
+    column_name = '_' + split_column_name_entry.get()
     if column_name == '_rlnGroupNumber' and regroup_var.get() == True:
         print("Please select either regroup or split by rlnGroupNumber")
         return
     if not column_name:
         print("Please provide the column name.", file=sys.stderr)
         return
+    
     # Load the particles into a dataframe 
     lines = star_file_contents.split('\n')
-    optics_df, particles_df = star_to_dataframes(lines)
-    if not column_name in particles_df.columns:
+    dataframes = star_to_dataframes(lines)  
+    optics_df = dataframes.get('data_optics')
+    particles_df = dataframes.get('data_particles')
+    if particles_df is None:
+        print("Particles DataFrame is not found.")
+        return
+    
+    # Check if the column exists in the DataFrame
+    if column_name not in particles_df.columns:
         print(f"Column '{column_name}' not found in DataFrame.")
         return
     # Use the filedialog module to open a directory selection dialog
@@ -481,13 +488,20 @@ save_file_button.grid(row=0, column=3, padx=(0, 10))
 #Particle counter
 particle_count_label = tk.Label(root, text="Particle Count: 0")
 particle_count_label.pack(pady=10)
+# Create a frame to hold both the Text widget and the scrollbar
+text_frame = tk.Frame(root)
+text_frame.pack(fill=tk.BOTH, expand=True)
 # Textbox 
-display_textbox = tk.Text(root, state=tk.NORMAL, wrap=tk.NONE)
-display_textbox.pack(side="top", fill="both", expand=True, padx=0, pady=0)
+display_textbox = tk.Text(text_frame, wrap=tk.NONE)
+display_textbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 # Create a horizontal scrollbar and link it to the Text widget
 xscrollbar = tk.Scrollbar(root, orient=tk.HORIZONTAL, command=display_textbox.xview)
 xscrollbar.pack(side=tk.BOTTOM, fill=tk.X)
 display_textbox['xscrollcommand'] = xscrollbar.set
+#Create a vertical scrollbar and link it 
+yscrollbar = tk.Scrollbar(text_frame, orient=tk.VERTICAL, command=display_textbox.yview)
+yscrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+display_textbox['yscrollcommand'] = yscrollbar.set
 
 def unbind_modified_event():
     display_textbox.unbind("<<Modified>>")
