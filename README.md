@@ -56,7 +56,7 @@ Relion 3.1 format star files should be used, as Relion 3.0 format is not fully s
 - Provide a function rather than a single value and check the **Function** box.
 
 **Example:**  
-If `rlnCoordinateX` needs to be binned by 2, provide the column name and `x/2` (without quotes) in the **New Value** entry. Then, check the **Function** box and click **Update Column Values**.
+If `rlnCoordinateX` needs to be binned by 2, provide the column name and `x/2` in the **New Value** entry. Then, check the **Function** box and click **Update Column Values**.
 
 ### Remove UID
 - Searches the entire particle entry for 21 consecutive numbers and removes them.
