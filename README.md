@@ -24,13 +24,14 @@ To kill the script from the remote machine
 `rln31downgrade.py` Converts RELION 3.1+ star files for compatibility with Warp/M. See https://www.jiscmail.ac.uk/cgi-bin/webadmin?A2=ind1910&L=CCPEM&P=R321009 for more info.
 <pre>python rln31downgrade.py --i particles.star </pre>
 
-`star_editor.py` Can remove UID's,search and replace in text file, or change all values for a rlnName column in a GUI with a live display of the open file. Requires python3 with tkinter. Basic original version.
+
+
+## Notes on `star_editor.py`
+
+`star_editor.py` Provides a GUI with a live display for making common modifications to cryo-EM star files such as editing paths, modifying data values, etc. Requires python3 with tkinter. Compatible with X11 forwarding. 
 <pre>python star_editor.py</pre>
 
-`star_editor_experimental.py` has added functionality for manually editing, modifying column values, and selecting subsets. Please report any bugs or unexpected results.
-
-
-## Additional Notes on `star_editor_experimental.py`
+![image](https://github.com/user-attachments/assets/d9d71ced-1aa3-4bad-b52d-047343b6d32c)
 
 Relion 3.1 format star files should be used, as Relion 3.0 format is not fully supported. Most operations require a selection of the particles table or optics table from the drop-down menu.
 
